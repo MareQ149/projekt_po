@@ -1,9 +1,33 @@
-class Pizza { 
+/// <summary>
+/// Reprezentuje pizze z nazw¹, rozmiarem, list¹ sk³adników oraz czy ma zostaæ dodana do menu
+/// </summary>
+class Pizza {
+    /// <summary>
+    /// Nazwa pizzy
+    /// </summary>
     public string name { get; private set; }
+    /// <summary>
+    /// Sk³adniki pizzy
+    /// </summary>
     public List<Ingredient> ingredients { get; private set; }
+    /// <summary>
+    /// Rozmiar pizzy
+    /// </summary>
     public PizzaSize size { get; private set; }
+    /// <summary>
+    /// Czy dodaæ pizze do menu
+    /// </summary>
     public bool addToMenu { get; private set; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Pizza"/> class.
+    /// </summary>
+    /// <param name="pizzaName">Name of the pizza.</param>
+    /// <param name="pizzaIngredients">The pizza ingredients.</param>
+    /// <param name="pizzaSize">Size of the pizza.</param>
+    /// <param name="addToMenu">if set to <c>true</c> [add to menu].</param>
+    /// <exception cref="System.ArgumentException">Pizza musi mieæ nazwê! - pizzaName</exception>
+    /// <exception cref="System.ArgumentNullException">pizzaIngredients - Pizza musi siê sk³adaæ z conajmniej 1 sk³adnika!!</exception>
     public Pizza(string pizzaName, List<Ingredient> pizzaIngredients, PizzaSize pizzaSize, bool addToMenu)
     {
         if (string.IsNullOrWhiteSpace(pizzaName))
@@ -25,6 +49,10 @@ class Pizza {
         
     }
 
+    /// <summary>
+    /// Gets the price.
+    /// </summary>
+    /// <returns></returns>
     public double GetPrice()
     {
         double price = 0;
