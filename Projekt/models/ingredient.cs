@@ -1,7 +1,7 @@
 /// <summary>
 /// Reprezentuje sk³adnik z nazw¹ i cen¹.
 /// </summary>
-class Ingredient
+public class Ingredient
 {  
     public static List<Ingredient> allIngredients = new List<Ingredient>();
     /// <summary>

@@ -1,7 +1,7 @@
 /// <summary>
 /// Reprezentuje pizze z nazw¹, rozmiarem, list¹ sk³adników oraz czy ma zostaæ dodana do menu
 /// </summary>
-class Pizza {
+public class Pizza {
     /// <summary>
     /// Nazwa pizzy
     /// </summary>

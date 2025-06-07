@@ -1,7 +1,7 @@
 /// <summary>
 /// Reprezentuje Menu
 /// </summary>
-class Menu
+public class Menu
 {
     /// <summary>
     /// Gets the menu.
