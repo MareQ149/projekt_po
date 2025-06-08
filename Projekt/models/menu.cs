@@ -23,9 +23,11 @@ public class Menu
     {
         foreach (var item in menu)
         {
-            Console.WriteLine($"Nazwa: {item.name}, rozmiar: {item.size}, sk³ad: {item.ingredients}");
+            string skladniki = string.Join(", ", item.ingredients.Select(i => i.Name));
+            Console.WriteLine($"Nazwa: {item.name}, rozmiar: {item.size}, sk³ad: {skladniki}");
         }
     }
+
 
     /// <summary>
     /// Dodaje pizze do menu
