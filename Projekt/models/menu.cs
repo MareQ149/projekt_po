@@ -24,7 +24,8 @@ public class Menu
         foreach (var item in menu)
         {
             string skladniki = string.Join(", ", item.ingredients.Select(i => i.Name));
-            Console.WriteLine($"Nazwa: {item.name}, rozmiar: {item.size}, sk³ad: {skladniki}");
+
+            Console.WriteLine($"Nazwa: {item.name}, rozmiar: {item.size}, sk³ad: {skladniki}, cena: {item.GetPrice()}");
         }
     }
 

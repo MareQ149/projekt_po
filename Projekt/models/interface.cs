@@ -33,9 +33,8 @@
         Console.WriteLine("1. Zobacz menu pizzy");
         Console.WriteLine("2. Zobacz kolejkę zamówień");
         Console.WriteLine("3. Zmień status zamówienia (po id)");
-        Console.WriteLine("4. Usuń zamówienie (po nazwie)");
-        Console.WriteLine("5. Dodaj pizze do menu");
-        Console.WriteLine("6. Dodaj składnik do listy składników");
+        Console.WriteLine("4. Dodaj pizze do menu");
+        Console.WriteLine("5. Dodaj składnik do listy składników");
         Console.WriteLine("0. Wyjście");
     }
 
@@ -44,7 +43,7 @@
         Console.WriteLine("=== TWORZENIE WŁASNEJ PIZZY ===");
         Console.WriteLine("Podaj nazwę pizzy:");
         string pizzaName = Console.ReadLine()!;
-        Console.WriteLine("Podaj rozmiar pizzy \n 1. mała \n 2. średnia \n 3. duża):");
+        Console.WriteLine("Podaj rozmiar pizzy \n 1. mała \n 2. średnia \n 3. duża");
         int choice = int.Parse(Console.ReadLine()!);
         PizzaSize size = PizzaSize.SMALL;
         if (choice < 1 || choice > 3)
@@ -73,7 +72,6 @@
         while (true)
         {
             int ingredientId = 1;
-            Console.Clear();
             foreach (var ingredient in Ingredient.allIngredients)
             {
                 Console.WriteLine($"{ingredientId}. {ingredient.Name} - {ingredient.Price} zł");
@@ -144,6 +142,7 @@
             Order zamowienie = new Order(licznik, orderName, pizzas);
             licznik++;
             Promotion.ApplyPromo2Plus1(zamowienie);
+            queue.AddToQueue(zamowienie);
             // Logika wyboru pizzy
         }
         else if (choice == "2")
@@ -168,7 +167,6 @@
                     }
                     Pizza wybranaPizza = menu.menu[pizzaChoice - 1];
                     pizzas.Add(wybranaPizza);
-                    licznik++;
                 }
                 else if (choice2 == 2)
                 {
@@ -180,6 +178,7 @@
                     string orderName = Console.ReadLine()!;
                     Order zamowienie = new Order(licznik, orderName, pizzas);
                     queue.AddToQueue(zamowienie);
+                    licznik++;
                     Console.WriteLine("Zamówienie zakończone.");
                     break; // Zakończ zamówienie
                 }

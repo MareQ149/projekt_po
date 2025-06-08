@@ -21,11 +21,7 @@ public class Program
 
         int licznik = 1;
         int choice = Interface.Select();
-        if (choice == 0)
-        {
-            choice = Interface.Select();
-        }
-        else if (choice == 1)
+        if (choice == 1)
         {
             while (true)
             {
@@ -46,13 +42,49 @@ public class Program
                         Interface.CancelOrderById(queue);
                         break;
                     case 0:
-                        Interface.Select();
+                        Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("Nieprawidłowy wybór. Proszę spróbować ponownie.");
                         break;
                 }
             }
+        }
+        else if (choice == 2)
+        {
+            while (true)
+            {
+                Interface.WorkerInterface();
+                int choice2 = int.Parse(Console.ReadLine()!);
+                switch (choice2)
+                {
+                    case 1:
+                        menu.DisplayMenu();
+                        break;
+                    case 2:
+                        Interface.ViewCurrentOrders(queue);
+                        break;
+                    case 3:
+                        Interface.ChangeOrderStatusById(queue);
+                        break;
+                    case 4:
+                        Interface.AddPizzaToMenu(menu);
+                        break;
+                    case 5:
+                        Interface.CreateIngredient();
+                        break;
+                    case 0:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Nieprawidłowy wybór. Proszę spróbować ponownie.");
+                        break;
+                }
+            }
+        }
+        else
+        {
+            choice = Interface.Select();
         }
     }
 }
