@@ -50,9 +50,8 @@ public class Pizza {
     }
 
     /// <summary>
-    /// Pobiera cene pizzy.
+    /// Zwraca cene pizzy.
     /// </summary>
-    /// <returns></returns>
     public double GetPrice()
     {
         double price = 0;
