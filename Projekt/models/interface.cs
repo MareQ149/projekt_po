@@ -95,7 +95,7 @@
         
         Pizza customPizza = new Pizza(pizzaName, ingredients, size, false);
         // Logika dodawania pizzy do menu lub zamówienia
-        Console.WriteLine($"Stworzono pizzę: {customPizza.name}, rozmiar: {customPizza.size}, skład: {string.Join(", ", customPizza.ingredients)}");
+        Console.WriteLine($"Stworzono pizzę: {customPizza.name}, rozmiar: {customPizza.size}, skład: {string.Join(", ", customPizza.ingredients.Select(i => i.Name))}");
         return customPizza;
     }
 
