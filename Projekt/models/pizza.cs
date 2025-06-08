@@ -59,6 +59,10 @@ public class Pizza {
         {
             price += item.Price;
         }
+        if(this.size == PizzaSize.LARGE) { price += 20; }
+        else if(this.size == PizzaSize.MEDIUM) { price += 15; }
+        else { price += 10; }
+
         return price;
     }
 }
