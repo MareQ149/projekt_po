@@ -19,7 +19,7 @@ public class Ingredient
     /// </summary>
     /// <param name="ingredientName">Nazwa sk³adnika</param>
     /// <param name="ingredientPrice">Cena sk³adnika</param>
-    /// <exception cref="System.ArgumentException">ingredientName - Nazwa sk³adnika nie mo¿e byæ pusta</exception>
+    
     public Ingredient(string ingredientName, double ingredientPrice)
     {
         

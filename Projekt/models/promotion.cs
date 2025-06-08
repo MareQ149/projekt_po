@@ -7,7 +7,7 @@ public class Promotion
     /// Stosuje promocję 2+1 (najtańsza pizza gratis)
     /// </summary>
     /// <param name="order">The order.</param>
-    /// <exception cref="System.Exception">nie powinno tak się stać</exception>
+    
     public static void ApplyPromo2Plus1(Order order)
     {
         int liczbapizz = order.pizzas.Count;
@@ -39,10 +39,7 @@ public class Promotion
             {
                 order.orderPrice -= cena3;
             }
-            else
-            {
-                throw new Exception("Coś poszło nie tak");
-            }
+            
         }
     }
 }

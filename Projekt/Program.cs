@@ -1,10 +1,9 @@
-﻿/// <summary>
-/// Główny program
-/// </summary>
-public class Program
+﻿public class Program
 {
     static void Main()
     {
+    StartProgram: // etykieta dla restartu programu
+
         var cheese = new Ingredient("Ser", 5.0);
         var tomato = new Ingredient("Pomidor", 3.0);
         var salami = new Ingredient("Salami", 6.0);
@@ -18,9 +17,9 @@ public class Program
         menu.AddPizza(pepperoni);
         var queue = new OrderQueue(new List<Order>());
 
-
         int licznik = 1;
         int choice = Interface.Select();
+
         if (choice == 1)
         {
             while (true)
@@ -42,8 +41,7 @@ public class Program
                         Interface.CancelOrderById(queue);
                         break;
                     case 5:
-                        Program.Main();
-                        break;
+                        goto StartProgram;
                     case 0:
                         Environment.Exit(0);
                         break;
@@ -77,8 +75,7 @@ public class Program
                         Interface.CreateIngredient();
                         break;
                     case 6:
-                        Program.Main();
-                        break;
+                        goto StartProgram;
                     case 0:
                         Environment.Exit(0);
                         break;
@@ -90,7 +87,7 @@ public class Program
         }
         else
         {
-            choice = Interface.Select();
+            goto StartProgram;
         }
     }
 }

@@ -27,8 +27,7 @@ public class Pizza {
     /// <param name="pizzaIngredients">Sk³adniki pizzy</param>
     /// <param name="pizzaSize">Rozmiar pizzy</param>
     /// <param name="addToMenu">jeœli true - mo¿na dodac do menu</param>
-    /// <exception cref="System.ArgumentException">Pizza musi mieæ nazwê! - pizzaName</exception>
-    /// <exception cref="System.ArgumentNullException">pizzaIngredients - Pizza musi siê sk³adaæ z conajmniej 1 sk³adnika!!</exception>
+    
     public Pizza(string pizzaName, List<Ingredient> pizzaIngredients, PizzaSize pizzaSize, bool addToMenu)
     {
         

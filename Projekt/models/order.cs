@@ -37,7 +37,7 @@ public class Order
     /// <param name="id">id zamówienia</param>
     /// <param name="orderName">nazwa zamówienia</param>
     /// <param name="pizzas">lista zamówionych pizz</param>
-    /// <exception cref="System.ArgumentException">Zamówienie musi mieć nazwę</exception>
+    
     public Order(int id, string orderName, List<Pizza> pizzas)
     {
         
