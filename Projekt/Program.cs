@@ -16,7 +16,7 @@ public class Program
         var menu = new Menu();
         menu.AddPizza(margherita);
         menu.AddPizza(pepperoni);
-        var orderQueue = new OrderQueue(new List<Order>());
+        var queue = new OrderQueue(new List<Order>());
 
 
         int licznik = 1;
@@ -37,13 +37,13 @@ public class Program
                         menu.DisplayMenu();
                         break;
                     case 2:
-                        Interface.CreateOrder(menu, ref licznik);
+                        Interface.CreateOrder(menu, ref licznik, queue);
                         break;
                     case 3:
-                        Interface.ViewCurrentOrders(orderQueue);
+                        Interface.ViewCurrentOrders(queue);
                         break;
                     case 4:
-                        Interface.CancelOrderById(orderQueue);
+                        Interface.CancelOrderById(queue);
                         break;
                     case 0:
                         Interface.Select();

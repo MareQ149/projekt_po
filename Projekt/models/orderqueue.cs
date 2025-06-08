@@ -37,7 +37,7 @@ public class OrderQueue
         Console.WriteLine("=== Lista zamówień ===");
         foreach (var item in orders)
         {
-            Console.WriteLine($"Numer zamówienia: {item.id}, Nazwa zamówienia: {item.orderName}, Przewidywany czas zamówienia{item.OrderTime}");
+            Console.WriteLine($"Numer zamówienia: {item.id}, Nazwa zamówienia: {item.orderName}, Przewidywany czas zamówienia: {item.OrderDeliveryExpected}");
         }
     }
 }

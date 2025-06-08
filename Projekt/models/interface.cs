@@ -99,7 +99,7 @@
         return customPizza;
     }
 
-    public static void CreateOrder(Menu menu, ref int licznik)
+    public static void CreateOrder(Menu menu, ref int licznik, OrderQueue queue)
     {
         
         Console.WriteLine("=== TWORZENIE ZAMÓWIENIA ===");
@@ -116,7 +116,7 @@
             if (firstPizza < 1 || firstPizza > menu.menu.Count)
             {
                 Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-                CreateOrder(menu, ref licznik);
+                CreateOrder(menu, ref licznik, queue);
                 return;
             }
             Console.WriteLine("Wybierz drugą pizzę:");
@@ -124,7 +124,7 @@
             if (secondPizza < 1 || secondPizza > menu.menu.Count)
             {
                 Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-                CreateOrder(menu, ref licznik);
+                CreateOrder(menu, ref licznik, queue);
                 return;
             }
             Console.WriteLine("Wybierz trzecią pizzę:");
@@ -132,7 +132,7 @@
             if (thirdPizza < 1 || thirdPizza > menu.menu.Count)
             {
                 Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-                CreateOrder(menu, ref licznik);
+                CreateOrder(menu, ref licznik, queue);
                 return;
             }
             List<Pizza> pizzas = new();
@@ -163,7 +163,7 @@
                     if (pizzaChoice < 1 || pizzaChoice > menu.menu.Count)
                     {
                         Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-                        CreateOrder(menu, ref licznik);
+                        CreateOrder(menu, ref licznik, queue);
                         return;
                     }
                     Pizza wybranaPizza = menu.menu[pizzaChoice - 1];
@@ -179,6 +179,7 @@
                     Console.WriteLine("Podaj nazwę zamówienia:");
                     string orderName = Console.ReadLine()!;
                     Order zamowienie = new Order(licznik, orderName, pizzas);
+                    queue.AddToQueue(zamowienie);
                     Console.WriteLine("Zamówienie zakończone.");
                     break; // Zakończ zamówienie
                 }
@@ -191,7 +192,7 @@
         else
         {
             Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-            CreateOrder(menu, ref licznik);
+            CreateOrder(menu, ref licznik, queue);
         }
     }
     public static void ViewCurrentOrders(OrderQueue queue)
