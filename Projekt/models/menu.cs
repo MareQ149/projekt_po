@@ -23,7 +23,7 @@ public class Menu
     {
         foreach (var item in menu)
         {
-            Console.WriteLine(item);
+            Console.WriteLine($"Nazwa: {item.name}, rozmiar: {item.size}, sk³ad: {item.ingredients}");
         }
     }
 
