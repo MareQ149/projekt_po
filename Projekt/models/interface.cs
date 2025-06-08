@@ -24,6 +24,7 @@
         Console.WriteLine("2. Stwórz zamówienie");
         Console.WriteLine("3. Zobacz kolejkę zamówień");
         Console.WriteLine("4. Anuluj zamówienie");
+        Console.WriteLine("5. Powrót");
         Console.WriteLine("0. Wyjście");
     }
 
@@ -35,6 +36,7 @@
         Console.WriteLine("3. Zmień status zamówienia (po id)");
         Console.WriteLine("4. Dodaj pizze do menu");
         Console.WriteLine("5. Dodaj składnik do listy składników");
+        Console.WriteLine("6. Powrót");
         Console.WriteLine("0. Wyjście");
     }
 
@@ -345,7 +347,7 @@
         Console.WriteLine("=== TWORZENIE SKŁADNIKA ===");
         Console.WriteLine("Podaj nazwę składnika:");
         string ingredientName = Console.ReadLine()!;
-        Console.WriteLine("Podaj cenę składnika:");
+        Console.WriteLine("Podaj cenę składnika (x , x): ");
         double ingredientPrice = double.Parse(Console.ReadLine()!);
         Ingredient newIngredient = new Ingredient(ingredientName, ingredientPrice);
         Console.WriteLine($"Stworzono składnik: {newIngredient.Name}, cena: {newIngredient.Price} zł");

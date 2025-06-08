@@ -41,6 +41,9 @@ public class Program
                     case 4:
                         Interface.CancelOrderById(queue);
                         break;
+                    case 5:
+                        Program.Main();
+                        break;
                     case 0:
                         Environment.Exit(0);
                         break;
@@ -72,6 +75,9 @@ public class Program
                         break;
                     case 5:
                         Interface.CreateIngredient();
+                        break;
+                    case 6:
+                        Program.Main();
                         break;
                     case 0:
                         Environment.Exit(0);
