@@ -1,4 +1,10 @@
-﻿public class Interface {
+﻿/// <summary>
+/// Interfejs użytkownika, który umożliwia interakcję z systemem zamówień pizzy.
+/// </summary>
+public class Interface {
+    /// <summary>
+    /// Wybor rodzaju konta użytkownika.
+    /// </summary>
     public static int Select() 
     {
         Console.WriteLine("Wybierz rodzaj konta: 1 - Klient, 2 - Pracownik");
@@ -17,6 +23,9 @@
             return 0;
         }
     }
+    /// <summary>
+    /// Interfejs użytkownika dla klienta, który umożliwia przeglądanie menu pizzy, tworzenie zamówień, przeglądanie kolejki zamówień i anulowanie zamówień.
+    /// </summary>
     public static void UserInterface()
     {
         Console.WriteLine("=== MENU GŁÓWNE ===");
@@ -27,7 +36,9 @@
         Console.WriteLine("5. Powrót");
         Console.WriteLine("0. Wyjście");
     }
-
+    /// <summary>
+    /// Interfejs pracownika, który umożliwia przeglądanie menu pizzy, przeglądanie kolejki zamówień, zmienianie statusu zamówienia, dodawanie pizzy do menu i dodawanie składników do listy składników.
+    /// </summary>
     public static void WorkerInterface()
     {
         Console.WriteLine("=== MENU PRACOWNIKA ===");
@@ -39,7 +50,9 @@
         Console.WriteLine("6. Powrót");
         Console.WriteLine("0. Wyjście");
     }
-
+    /// <summary>
+    /// Tworzenie własnej pizzy, gdzie użytkownik może wybrać nazwę, rozmiar i składniki pizzy.
+    /// </summary>
     public static Pizza CreateCustomPizza()
     {
         Console.WriteLine("=== TWORZENIE WŁASNEJ PIZZY ===");
@@ -98,7 +111,12 @@
         Console.WriteLine($"Stworzono pizzę: {customPizza.name}, rozmiar: {customPizza.size}, skład: {string.Join(", ", customPizza.ingredients.Select(i => i.Name))}");
         return customPizza;
     }
-
+    /// <summary>
+    /// Tworzenie zamówienia, gdzie użytkownik może wybrać pizzę z menu lub stworzyć własną pizzę, a także zastosować promocję 2+1.
+    /// </summary>
+    /// <param name="menu">Menu pizzy</param>
+    /// <param name="licznik">Id</param>
+    /// <param name="queue">Kolejka zamówień</param>
     public static void CreateOrder(Menu menu, ref int licznik, OrderQueue queue)
     {
         
@@ -196,11 +214,18 @@
             CreateOrder(menu, ref licznik, queue);
         }
     }
+    /// <summary>
+    /// Wyświetla aktualne zamówienia w kolejce.
+    /// </summary>
+    /// <param name="queue">Kolejka zamówień</param>
     public static void ViewCurrentOrders(OrderQueue queue)
     {
         queue.DisplayQueue();
     }
-
+    /// <summary>
+    /// Anuluje zamówienie na podstawie jego ID.
+    /// </summary>
+    /// <param name="queue">Kolejka zamówień</param>
     public static void CancelOrderById(OrderQueue queue)
     {
         queue.DisplayQueue();
@@ -226,6 +251,10 @@
         }
 
     }
+    /// <summary>
+    /// Zmienia status zamówienia na podstawie jego ID.
+    /// </summary>
+    /// <param name="queue">Kolejka zamówień</param>
     public static void ChangeOrderStatusById(OrderQueue queue)
     {
         queue.DisplayQueue();
@@ -283,6 +312,10 @@
             Console.WriteLine("Niepoprawny format numeru zamówienia.");
         }
     }
+    /// <summary>
+    /// Dodaje pizzę do menu, pracownik nadaje nazwę, rozmiar i składniki pizzy.
+    /// </summary>
+    /// <param name="menu">Menu pizzy</param>
     public static void AddPizzaToMenu(Menu menu)
     {
         Console.WriteLine("=== TWORZENIE PIZZY ===");
@@ -342,6 +375,9 @@
         menu.AddPizza(customPizza);
 
     }
+    /// <summary>
+    /// Tworzy składnik, pracownik nadaje nazwę i cenę składnika.
+    /// </summary>
     public static void CreateIngredient()
     {
         Console.WriteLine("=== TWORZENIE SKŁADNIKA ===");
