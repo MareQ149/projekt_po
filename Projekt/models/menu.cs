@@ -4,15 +4,12 @@
 public class Menu
 {
     /// <summary>
-    /// Gets the menu.
+    /// Pole menu
     /// </summary>
-    /// <value>
-    /// The menu.
-    /// </value>
     public List<Pizza> menu { get; private set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Menu"/> class.
+    /// Tworzy instancje klasy  <see cref="Menu"/>
     /// </summary>
     public Menu()
     {
@@ -20,7 +17,7 @@ public class Menu
     }
 
     /// <summary>
-    /// Displays the menu.
+    /// Wyswietla menu
     /// </summary>
     public void DisplayMenu()
     {
@@ -31,9 +28,9 @@ public class Menu
     }
 
     /// <summary>
-    /// Adds the pizza to menu.
+    /// Dodaje pizze do menu
     /// </summary>
-    /// <param name="pizza">The pizza.</param>
+    /// <param name="pizza">Pizza</param>
     public void AddPizza(Pizza pizza)
     {
         menu.Add(pizza);
