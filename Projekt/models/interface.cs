@@ -283,27 +283,61 @@
     }
     public static void AddPizzaToMenu(Menu menu)
     {
-        Console.WriteLine("=== DODAWANIE PIZZY DO MENU ===");
-        foreach (var pizza in Pizza.allPizzas)
+        Console.WriteLine("=== TWORZENIE PIZZY ===");
+        Console.WriteLine("Podaj nazwę pizzy:");
+        string pizzaName = Console.ReadLine()!;
+        Console.WriteLine("Podaj rozmiar pizzy \n 1. mała \n 2. średnia \n 3. duża");
+        int choice = int.Parse(Console.ReadLine()!);
+        PizzaSize size = PizzaSize.SMALL;
+        if (choice < 1 || choice > 3)
         {
-            Console.WriteLine($"Nazwa: {pizza.name}, Rozmiar: {pizza.size}");
-            Console.WriteLine("Czy chcesz dodać tę pizzę do menu? (tak/nie)");
-            string choice = Console.ReadLine()!.ToLower();
-            if (choice == "tak")
+            Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
+            CreateCustomPizza();
+        }
+        else
+        {
+            if (choice == 1)
             {
-                menu.AddPizza(pizza);
-                Console.WriteLine($"Pizza {pizza.name} została dodana do menu.");
+                size = PizzaSize.SMALL;
             }
-            else if (choice == "nie")
+            else if (choice == 2)
             {
-                Console.WriteLine($"Pizza {pizza.name} nie została dodana do menu.");
+                size = PizzaSize.MEDIUM;
             }
             else
             {
-                Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-                AddPizzaToMenu(menu);
+                size = PizzaSize.LARGE;
+
             }
         }
+        Console.WriteLine("Wybierz składniki:");
+        List<Ingredient> ingredients = new();
+        while (true)
+        {
+            int ingredientId = 1;
+            foreach (var ingredient in Ingredient.allIngredients)
+            {
+                Console.WriteLine($"{ingredientId}. {ingredient.Name} - {ingredient.Price} zł");
+                ingredientId++;
+            }
+            Console.WriteLine("Wybierz składnik (lub wpisz 0, aby zakończyć):");
+            int ingredientChoice = int.Parse(Console.ReadLine()!);
+            if (ingredientChoice == 0)
+            {
+                break; // Zakończ wybieranie składników
+            }
+            if (ingredientChoice < 1 || ingredientChoice > Ingredient.allIngredients.Count)
+            {
+                Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
+                continue; // Poproś o ponowny wybór składnika
+            }
+            ingredients.Add(Ingredient.allIngredients[ingredientChoice - 1]); // Dodaj składnik do listy
+        }
+
+        Pizza customPizza = new Pizza(pizzaName, ingredients, size, false);
+        // Logika dodawania pizzy do menu
+        Console.WriteLine($"Stworzono pizzę: {customPizza.name}, rozmiar: {customPizza.size}, skład: {string.Join(", ", customPizza.ingredients.Select(i => i.Name))}");
+        menu.AddPizza(customPizza);
 
     }
     public static void CreateIngredient()
