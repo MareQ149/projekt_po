@@ -36,11 +36,10 @@ public class Order
     /// </summary>
     /// <param name="id">id zamówienia</param>
     /// <param name="orderName">nazwa zamówienia</param>
-    /// <param name="status">status zamówienia</param>
     /// <param name="pizzas">lista zamówionych pizz</param>
     /// <param name="orderPrice">cena zamówienia</param>
     /// <exception cref="System.ArgumentException">Zamówienie musi mieć nazwę</exception>
-    public Order(int id, string orderName, OrderStatus status, List<Pizza> pizzas, double orderPrice)
+    public Order(int id, string orderName, List<Pizza> pizzas, double orderPrice)
     {
         if (string.IsNullOrWhiteSpace(orderName))
         {
@@ -57,7 +56,7 @@ public class Order
         }
         this.id = id;
         this.orderName = orderName;
-        this.status = status;
+        status = OrderStatus.ORDERED;
         this.pizzas = pizzas;
         this.orderPrice = orderPrice;
         OrderTime = TimeOnly.FromDateTime(DateTime.Now);
