@@ -20,12 +20,12 @@ public class Pizza {
     public bool addToMenu { get; private set; }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Pizza"/> class.
+    /// Tworzy instancje klasy <see cref="Pizza"/>
     /// </summary>
-    /// <param name="pizzaName">Name of the pizza.</param>
-    /// <param name="pizzaIngredients">The pizza ingredients.</param>
-    /// <param name="pizzaSize">Size of the pizza.</param>
-    /// <param name="addToMenu">if set to <c>true</c> [add to menu].</param>
+    /// <param name="pizzaName">Nazwa pizzy</param>
+    /// <param name="pizzaIngredients">Sk³adniki pizzy</param>
+    /// <param name="pizzaSize">Rozmiar pizzy</param>
+    /// <param name="addToMenu">jeœli true - mo¿na dodac do menu</param>
     /// <exception cref="System.ArgumentException">Pizza musi mieæ nazwê! - pizzaName</exception>
     /// <exception cref="System.ArgumentNullException">pizzaIngredients - Pizza musi siê sk³adaæ z conajmniej 1 sk³adnika!!</exception>
     public Pizza(string pizzaName, List<Ingredient> pizzaIngredients, PizzaSize pizzaSize, bool addToMenu)
@@ -50,9 +50,8 @@ public class Pizza {
     }
 
     /// <summary>
-    /// Gets the price.
+    /// Zwraca cene pizzy.
     /// </summary>
-    /// <returns></returns>
     public double GetPrice()
     {
         double price = 0;
@@ -60,6 +59,10 @@ public class Pizza {
         {
             price += item.Price;
         }
+        if(this.size == PizzaSize.LARGE) { price += 20; }
+        else if(this.size == PizzaSize.MEDIUM) { price += 15; }
+        else { price += 10; }
+
         return price;
     }
 }

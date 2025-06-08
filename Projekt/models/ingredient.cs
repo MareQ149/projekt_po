@@ -15,12 +15,18 @@ public class Ingredient
     public double Price { get; private set; }
 
     /// <summary>
-    /// Inicjalizuje now¹ instancjê klasy <see cref="Ingredient"/>.
+    /// Tworzy instancje klasy <see cref="Ingredient"/> 
     /// </summary>
-    /// <param name="ingredientName">Nazwa sk³adnika.</param>
-    /// <param name="ingredientPrice">Cena sk³adnika.</param>
+    /// <param name="ingredientName">Nazwa sk³adnika</param>
+    /// <param name="ingredientPrice">Cena sk³adnika</param>
+    /// <exception cref="System.ArgumentException">ingredientName - Nazwa sk³adnika nie mo¿e byæ pusta</exception>
     public Ingredient(string ingredientName, double ingredientPrice)
     {
+        if (string.IsNullOrEmpty(ingredientName))
+        {
+            throw new ArgumentException(nameof(ingredientName), "Nazwa sk³adnika nie mo¿e byæ pusta");
+        }
+
         Name = ingredientName;
         Price = ingredientPrice;
 
