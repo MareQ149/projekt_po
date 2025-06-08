@@ -1,28 +1,81 @@
-﻿public class Order
+﻿/// <summary>
+/// Reprezentuje zamówienia z id zamówienia, nazwę, status, liste zamówionych pizz, cenę, czas złożonego zamówienia i przewidywany czas dostawy
+/// </summary>
+public class Order
 {
+    /// <summary>
+    /// id zamówienia
+    /// </summary>
     public int id { get; private set;}
+    /// <summary>
+    /// nazwa zamówienia
+    /// </summary>
     public string orderName { get; private set; }
+    /// <summary>
+    /// status zamówienia
+    /// </summary>
     public OrderStatus status { get; private set; }
+    /// <summary>
+    /// lista zamówionych pizz
+    /// </summary>
     public List<Pizza> pizzas { get; private set; }
-    public double orderPrice { get; private set; }
+    /// <summary>
+    /// cena zamówienia
+    /// </summary>
+    public double orderPrice { get; set; }
+    /// <summary>
+    /// podaje czas złożenia zamówienia
+    /// </summary>
     public TimeOnly OrderTime { get; private set; }
+    /// <summary>
+    /// kiedy możemy spodziewać się pizzy
+    /// </summary>
     public TimeOnly OrderDeliveryExpected { get; private set; }
-    public Order(int id, string orderName, OrderStatus status, List<Pizza> pizzas, double orderPrice, TimeOnly OrderTime, TimeOnly OrderDeliveryExpected)
+    /// <summary>
+    /// Tworzy instancję klasy <see cref="Order"/>.
+    /// </summary>
+    /// <param name="id">id zamówienia</param>
+    /// <param name="orderName">nazwa zamówienia</param>
+    /// <param name="status">status zamówienia</param>
+    /// <param name="pizzas">lista zamówionych pizz</param>
+    /// <param name="orderPrice">cena zamówienia</param>
+    /// <exception cref="System.ArgumentException">Zamówienie musi mieć nazwę</exception>
+    public Order(int id, string orderName, OrderStatus status, List<Pizza> pizzas, double orderPrice)
     {
+        if (string.IsNullOrWhiteSpace(orderName))
+        {
+            throw new ArgumentException("Zamówienie musi mieć nazwę!", nameof(orderName));
+        }
+        orderPrice = 0;
+        foreach (var item in pizzas)
+        {
+            orderPrice += item.GetPrice();
+        }
+        if(orderPrice < 100)
+        {
+            orderPrice += 10;
+        }
         this.id = id;
         this.orderName = orderName;
         this.status = status;
         this.pizzas = pizzas;
         this.orderPrice = orderPrice;
-        this.OrderTime = OrderTime;
-        this.OrderDeliveryExpected = OrderDeliveryExpected;
+        OrderTime = TimeOnly.FromDateTime(DateTime.Now);
+        OrderDeliveryExpected = OrderTime.AddMinutes(40);
     }
-    public void UpdateStatus(OrderStatus)
+    /// <summary>
+    /// aktualizuje status zamówienia
+    /// </summary>
+    /// <param name="NewStatus">zaktualizowany status zamówienia</param>
+    public void UpdateStatus(OrderStatus NewStatus)
     {
-
+        status = NewStatus;
     }
+    /// <summary>
+    /// anuluje zamówienie
+    /// </summary>
     public void CancelOrder()
     {
-
+        status = OrderStatus.CANCELLED;
     }
 }
