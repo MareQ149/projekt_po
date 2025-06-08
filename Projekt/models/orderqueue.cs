@@ -20,9 +20,15 @@ public class OrderQueue
     /// </summary>
     public void DisplayQueue()
     {
+        if (orders.Count == 0)
+        {
+            Console.WriteLine("Brak zamówień w kolejce.");
+            return;
+        }
+        Console.WriteLine("=== Lista zamówień ===");
         foreach (var item in orders)
         {
-            Console.WriteLine($"Nazwa zamówienia: {item.orderName}, Przewidywany czas zamówienia{item.OrderTime}");
+            Console.WriteLine($"Numer zamówienia: {item.id}, Nazwa zamówienia: {item.orderName}, Przewidywany czas zamówienia{item.OrderTime}");
         }
     }
 }

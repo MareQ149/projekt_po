@@ -2,6 +2,7 @@
 /// Reprezentuje pizze z nazw¹, rozmiarem, list¹ sk³adników oraz czy ma zostaæ dodana do menu
 /// </summary>
 public class Pizza {
+    public static List<Pizza> allPizzas = new List<Pizza>();
     /// <summary>
     /// Nazwa pizzy
     /// </summary>
@@ -46,7 +47,9 @@ public class Pizza {
         ingredients = pizzaIngredients;
         size = pizzaSize;
         this.addToMenu = addToMenu;
-        
+
+        allPizzas.Add(this);
+
     }
 
     /// <summary>

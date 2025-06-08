@@ -8,7 +8,7 @@ public class Promotion
     /// </summary>
     /// <param name="order">The order.</param>
     /// <exception cref="System.Exception">nie powinno tak się stać</exception>
-    public void ApplyPromo2Plus1(Order order)
+    public static void ApplyPromo2Plus1(Order order)
     {
         int liczbapizz = order.pizzas.Count;
         if(liczbapizz == 3)

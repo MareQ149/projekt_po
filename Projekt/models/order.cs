@@ -57,7 +57,6 @@ public class Order
         this.orderName = orderName;
         status = OrderStatus.ORDERED;
         this.pizzas = pizzas;
-        this.orderPrice = orderPrice;
         OrderTime = TimeOnly.FromDateTime(DateTime.Now);
         OrderDeliveryExpected = OrderTime.AddMinutes(40);
     }
