@@ -22,10 +22,7 @@ public class Ingredient
     /// <exception cref="System.ArgumentException">ingredientName - Nazwa sk³adnika nie mo¿e byæ pusta</exception>
     public Ingredient(string ingredientName, double ingredientPrice)
     {
-        if (string.IsNullOrEmpty(ingredientName))
-        {
-            throw new ArgumentException(nameof(ingredientName), "Nazwa sk³adnika nie mo¿e byæ pusta");
-        }
+        
 
         Name = ingredientName;
         Price = ingredientPrice;

@@ -31,17 +31,7 @@ public class Pizza {
     /// <exception cref="System.ArgumentNullException">pizzaIngredients - Pizza musi siê sk³adaæ z conajmniej 1 sk³adnika!!</exception>
     public Pizza(string pizzaName, List<Ingredient> pizzaIngredients, PizzaSize pizzaSize, bool addToMenu)
     {
-        if (string.IsNullOrWhiteSpace(pizzaName))
-        {
-            throw new ArgumentException("Pizza musi mieæ nazwê!", nameof(pizzaName));
-
-        }
-
-        if (pizzaIngredients is null || pizzaIngredients.Count == 0)
-        {
-            throw new ArgumentNullException(nameof(pizzaIngredients), "Pizza musi siê sk³adaæ z conajmniej 1 sk³adnika!!");
-        }
-
+        
 
         this.name = pizzaName;
         ingredients = pizzaIngredients;

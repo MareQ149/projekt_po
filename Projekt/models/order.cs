@@ -40,10 +40,7 @@ public class Order
     /// <exception cref="System.ArgumentException">Zamówienie musi mieć nazwę</exception>
     public Order(int id, string orderName, List<Pizza> pizzas)
     {
-        if (string.IsNullOrWhiteSpace(orderName))
-        {
-            throw new ArgumentException("Zamówienie musi mieć nazwę!", nameof(orderName));
-        }
+        
         orderPrice = 0;
         foreach (var item in pizzas)
         {
