@@ -15,6 +15,15 @@ public class OrderQueue
     {
         this.orders = orders;
     }
+
+    /// <summary>
+    /// Dodaje zamoienie do kolejki
+    /// </summary>
+    /// <param name="order">Zamowienie.</param>
+    public void AddToQueue(Order order)
+    {
+        orders.Add(order);
+    }
     /// <summary>
     /// Wyświetla listę zamówień
     /// </summary>
