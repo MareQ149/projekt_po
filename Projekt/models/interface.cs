@@ -160,10 +160,19 @@ public class Interface {
             pizzas.Add(menu.menu[thirdPizza - 1]);
             Console.WriteLine("Podaj nazwę zamówienia:");
             string orderName = Console.ReadLine()!;
-            Order zamowienie = new Order(licznik, orderName, pizzas);
-            licznik++;
-            Promotion.ApplyPromo2Plus1(zamowienie);
-            queue.AddToQueue(zamowienie);
+            if (string.IsNullOrWhiteSpace(orderName) || pizzas.Count == 0)
+            {
+                Console.WriteLine("Błędne zamówienie!");
+                CreateOrder(menu, ref licznik, queue);
+            }
+            else
+            {
+                Order zamowienie = new Order(licznik, orderName, pizzas);
+                licznik++;
+                Promotion.ApplyPromo2Plus1(zamowienie);
+                queue.AddToQueue(zamowienie);
+            }
+            
             // Logika wyboru pizzy
         }
         else if (choice == "2")
@@ -197,11 +206,19 @@ public class Interface {
                 {
                     Console.WriteLine("Podaj nazwę zamówienia:");
                     string orderName = Console.ReadLine()!;
-                    Order zamowienie = new Order(licznik, orderName, pizzas);
-                    queue.AddToQueue(zamowienie);
-                    licznik++;
-                    Console.WriteLine("Zamówienie zakończone.");
-                    break; // Zakończ zamówienie
+
+                    if (string.IsNullOrWhiteSpace(orderName) || pizzas.Count == 0)
+                    {
+                        Console.WriteLine("Błędne zamówienie!");
+                        CreateOrder(menu, ref licznik, queue);
+                    }
+                    else
+                    {
+                        Order zamowienie = new Order(licznik, orderName, pizzas);
+                        licznik++;
+                        Promotion.ApplyPromo2Plus1(zamowienie);
+                        queue.AddToQueue(zamowienie);
+                    }
                 }
                 else
                 {
