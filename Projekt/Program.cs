@@ -2,7 +2,6 @@
 {
     static void Main()
     {
-    StartProgram: // etykieta dla restartu programu
 
         var cheese = new Ingredient("Ser", 5.0);
         var tomato = new Ingredient("Pomidor", 3.0);
