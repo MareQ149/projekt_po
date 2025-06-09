@@ -1,4 +1,7 @@
-﻿public enum OrderStatus
+﻿/// <summary>
+/// Zawiera różne stany zamówienia
+/// </summary>
+public enum OrderStatus
 {
     ORDERED,
     ACCEPTED,
