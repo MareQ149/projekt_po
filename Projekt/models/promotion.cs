@@ -40,7 +40,6 @@ public class Promotion
             {
                 order.orderPrice -= cena3;
             }
-            
         }
     }
 }
