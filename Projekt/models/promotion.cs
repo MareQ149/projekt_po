@@ -18,18 +18,7 @@ public class Promotion
             double cena3 = order.pizzas[2].GetPrice();
             if(cena1 <= cena2 && cena1 <= cena3)
             {
-                if(cena1 == cena2)
-                {
-                    order.orderPrice -= cena1;
-                }
-                else if (cena1 == cena3)
-                {
-                    order.orderPrice -= cena1;
-                }
-                else if(cena1 == cena2 && cena1 == cena3)
-                {
-                    order.orderPrice -= cena1;
-                }
+                order.orderPrice -= cena1;
             }
             else if (cena2 <= cena1 && cena2 <= cena3)
             {
