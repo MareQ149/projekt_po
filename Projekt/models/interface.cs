@@ -56,15 +56,20 @@ public class Interface {
     public static Pizza CreateCustomPizza()
     {
         Console.WriteLine("=== TWORZENIE WŁASNEJ PIZZY ===");
-        Console.WriteLine("Podaj nazwę pizzy:");
+        Console.WriteLine("Podaj nazwę pizzy (wpisz '0' aby anulować akcję):");
         string pizzaName = Console.ReadLine()!;
+        if (string.IsNullOrWhiteSpace(pizzaName) || pizzaName == "0")
+        {
+            Console.WriteLine("Anulowano tworzenie pizzy.");
+            return null!;
+        }
         Console.WriteLine("=== PODAJ ROZMIAR ===");
-        Console.WriteLine("Podaj rozmiar pizzy \n 1. mała \n 2. średnia \n 3. duża");
+        Console.WriteLine("Podaj rozmiar pizzy \n1. Mała \n2. Średnia\n 3. Duża \n0. Anuluj");
 
-        if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > 3)
+        if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 0 || choice > 3)
         {
             Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-            CreateCustomPizza(); // Zakładam, że ta metoda ponownie wywołuje wybór rozmiaru
+            return CreateCustomPizza();
         }
 
         PizzaSize size;
@@ -77,9 +82,14 @@ public class Interface {
         {
             size = PizzaSize.MEDIUM;
         }
-        else // choice == 3
+        else if (choice == 3)
         {
             size = PizzaSize.LARGE;
+        }
+        else
+        {
+            Console.WriteLine("Anulowano tworzenie pizzy.");
+            return null!;
         }
         Console.WriteLine("Wybierz składniki:");
         List<Ingredient> ingredients = new();
@@ -97,12 +107,12 @@ public class Interface {
             if (!int.TryParse(input, out int ingredientChoice))
             {
                 Console.WriteLine("Nieprawidłowe dane. Wpisz numer składnika.");
-                continue; // Poproś ponownie
+                continue;
             }
 
             if (ingredientChoice == 0)
             {
-                break; // Zakończ wybieranie składników
+                break;
             }
 
             if (ingredientChoice < 1 || ingredientChoice > Ingredient.allIngredients.Count)
@@ -111,12 +121,22 @@ public class Interface {
                 continue;
             }
 
-            ingredients.Add(Ingredient.allIngredients[ingredientChoice - 1]); // Dodaj składnik do listy
+            ingredients.Add(Ingredient.allIngredients[ingredientChoice - 1]);
         }
         Pizza customPizza = new Pizza(pizzaName, ingredients, size, false);
-        // Logika dodawania pizzy do menu lub zamówienia
         Console.WriteLine($"Stworzono pizzę: {customPizza.name}, rozmiar: {customPizza.size}, skład: {string.Join(", ", customPizza.ingredients.Select(i => i.Name))}");
-        return customPizza;
+        Console.WriteLine("Czy na pewno chcesz dodać tę pizzę do zamówienia? (tak/nie)");
+        string? confirm = Console.ReadLine()?.ToLower();
+        if (confirm != "tak")
+        {
+            Console.WriteLine("Anulowano dodawanie pizzy do zamówienia.");
+            return null!;
+        }
+        else
+        {
+            Console.WriteLine("Pizza została dodana do zamówienia.");
+            return customPizza;
+        }
     }
     /// <summary>
     /// Tworzenie zamówienia, gdzie użytkownik może wybrać pizzę z menu lub stworzyć własną pizzę, a także zastosować promocję 2+1.
@@ -127,23 +147,20 @@ public class Interface {
     public static void CreateOrder(Menu menu, ref int licznik, OrderQueue queue)
     {
         
-        Console.WriteLine("=== TWORZENIE ZAMÓWIENIA ===");
-        Console.WriteLine("Czy chcesz zastosować promocję 2+1 (tylko pizzę z menu)?");
+        Console.WriteLine("=== PROMOCJA ===");
+        Console.WriteLine("Czy chcesz zastosować promocję 2+1? Tylko pizzę z menu!");
         Console.WriteLine("1. Tak");
         Console.WriteLine("2. Nie");
+        Console.WriteLine("0. Anuluj zamówienie");
         string choice = Console.ReadLine()!;
         if (choice == "1")
         {
+            Console.WriteLine("=== TWORZENIE ZAMÓWIENIA ===");
             Console.WriteLine("Wybierz 3 pizze, najtańsza będzie gratis!");
             menu.DisplayMenu();
             Console.WriteLine("Wybierz pierwszą pizzę:");
             string? input = Console.ReadLine();
             if (!int.TryParse(input, out int firstPizza) || firstPizza < 1 || firstPizza > menu.menu.Count)
-            {
-                Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-                CreateOrder(menu, ref licznik, queue);
-            }
-            if (firstPizza < 1 || firstPizza > menu.menu.Count)
             {
                 Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
                 CreateOrder(menu, ref licznik, queue);
@@ -155,13 +172,8 @@ public class Interface {
             {
                 Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
                 CreateOrder(menu, ref licznik, queue);
-
-            }
-            if (secondPizza < 1 || secondPizza > menu.menu.Count)
-            {
-                Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-                CreateOrder(menu, ref licznik, queue);
                 return;
+
             }
             Console.WriteLine("Wybierz trzecią pizzę:");
             string? input3 = Console.ReadLine();
@@ -169,22 +181,24 @@ public class Interface {
             {
                 Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
                 CreateOrder(menu, ref licznik, queue);
-            }
-            if (thirdPizza < 1 || thirdPizza > menu.menu.Count)
-            {
-                Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-                CreateOrder(menu, ref licznik, queue);
+                return;
             }
             List<Pizza> pizzas = new();
-            pizzas.Add(menu.menu[firstPizza - 1]); // Zakładamy, że indeksy zaczynają się od 0
+            pizzas.Add(menu.menu[firstPizza - 1]);
             pizzas.Add(menu.menu[secondPizza - 1]);
             pizzas.Add(menu.menu[thirdPizza - 1]);
-            Console.WriteLine("Podaj nazwę zamówienia:");
+            Console.WriteLine("Podaj nazwę zamówienia lub wpisz '0' aby anulować:");
             string orderName = Console.ReadLine()!;
             if (string.IsNullOrWhiteSpace(orderName) || pizzas.Count == 0)
             {
                 Console.WriteLine("Błędne zamówienie!");
                 CreateOrder(menu, ref licznik, queue);
+                return;
+            }
+            else if (orderName == "0")
+            {
+                Console.WriteLine("Anulowano zamówienie.");
+                return;
             }
             else
             {
@@ -193,26 +207,31 @@ public class Interface {
                 Promotion.ApplyPromo2Plus1(zamowienie);
                 queue.AddToQueue(zamowienie);
             }
-            
-            // Logika wyboru pizzy
         }
         else if (choice == "2")
         {
             List<Pizza> pizzas = new();
+            Console.WriteLine("=== TWORZENIE ZAMÓWIENIA ===");
             while (true)
             {
                 Console.WriteLine("1. Wybierz pizzę z menu:");
                 Console.WriteLine("2. Stwórz własną pizzę");
-                Console.WriteLine("0. Zakończ zamówienie");
-                int choice2 = int.Parse(Console.ReadLine()!);
-                if (choice2 == 1)
+                Console.WriteLine("3. Zakończ zamówienie");
+                Console.WriteLine("0. Anuluj zamówienie");
+                string? input = Console.ReadLine();
+                if (!int.TryParse(input, out int choice2))
+                {
+                    Console.WriteLine("Nieprawidłowe dane. Wpisz numer opcji.");
+                    continue;
+                }
+                else if (choice2 == 1)
                 {
                     menu.DisplayMenu();
                     Console.WriteLine("Wybierz pizzę:");
-                    int pizzaChoice = int.Parse(Console.ReadLine()!);
-                    if (pizzaChoice < 1 || pizzaChoice > menu.menu.Count)
+                    string? input2 = Console.ReadLine();
+                    if (!int.TryParse(input2, out int pizzaChoice) || pizzaChoice < 1 || pizzaChoice > menu.menu.Count)
                     {
-                        Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
+                        Console.WriteLine("Nieprawidłowe dane. Wpisz numer opcji.");
                         CreateOrder(menu, ref licznik, queue);
                         return;
                     }
@@ -221,17 +240,22 @@ public class Interface {
                 }
                 else if (choice2 == 2)
                 {
-                    pizzas.Add(CreateCustomPizza()); // Dodaj własną pizzę do zamówienia
+                    pizzas.Add(CreateCustomPizza());
                 }
-                else if (choice2 == 0)
+                else if (choice2 == 3)
                 {
                     Console.WriteLine("Podaj nazwę zamówienia:");
                     string orderName = Console.ReadLine()!;
 
-                    if (string.IsNullOrWhiteSpace(orderName) || pizzas.Count == 0)
+                    if (string.IsNullOrWhiteSpace(orderName))
                     {
-                        Console.WriteLine("Błędne zamówienie!");
-                        CreateOrder(menu, ref licznik, queue);
+                        Console.WriteLine("Zamówienie musi posiadać nazwę! Zamówienie anulowane");
+                        return;
+                    }
+                    else if (pizzas.Count == 0)
+                    {
+                        Console.WriteLine("Zamówienie musi zawierać przynajmniej jedną pizzę! Zamówienie anulowane");
+                        return;
                     }
                     else
                     {
@@ -242,16 +266,27 @@ public class Interface {
                         break;
                     }
                 }
+                else if (choice2 == 0)
+                {
+                    Console.WriteLine("Anulowano zamówienie.");
+                    return;
+                }
                 else
                 {
                     Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
                 }
             }
         }
+        else if (choice == "0")
+        {
+            Console.WriteLine("Anulowano zamówienie.");
+            return;
+        }
         else
         {
             Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
             CreateOrder(menu, ref licznik, queue);
+            return;
         }
     }
     /// <summary>
@@ -260,6 +295,7 @@ public class Interface {
     /// <param name="queue">Kolejka zamówień</param>
     public static void ViewCurrentOrders(OrderQueue queue)
     {
+        Console.WriteLine("=== ZAMÓWIENIA ===");
         queue.DisplayQueue();
     }
     /// <summary>
@@ -268,8 +304,14 @@ public class Interface {
     /// <param name="queue">Kolejka zamówień</param>
     public static void CancelOrderById(OrderQueue queue)
     {
+        if (queue.orders.Count == 0)
+        {
+            Console.WriteLine("Brak zamówień do anulowania.");
+            return;
+        }
+        Console.WriteLine("=== ANULOWANIE ZAMÓWIENIA ===");
         queue.DisplayQueue();
-        Console.WriteLine("Podaj numer zamówienia do anulowania:");
+        Console.WriteLine("Podaj numer zamówienia do anulowania (Wpisz 0 aby anulować akcję):");
 
         if (int.TryParse(Console.ReadLine(), out int anulowaneZamowienie))
         {
@@ -279,6 +321,11 @@ public class Interface {
             {
                 orderToCancel.CancelOrder();
                 Console.WriteLine("Zamówienie zostało anulowane.");
+            }
+            else if (anulowaneZamowienie == 0)
+            {
+                Console.WriteLine("Anulowano akcję anulowania zamówienia.");
+                return;
             }
             else
             {
@@ -297,8 +344,14 @@ public class Interface {
     /// <param name="queue">Kolejka zamówień</param>
     public static void ChangeOrderStatusById(OrderQueue queue)
     {
+        Console.WriteLine("=== ZMIANA STATUSU ZAMÓWIENIA ===");
+        if (queue.orders.Count == 0)
+        {
+            Console.WriteLine("Brak zamówień do aktualizowania.");
+            return;
+        }
         queue.DisplayQueue();
-        Console.WriteLine("Podaj numer zamówienia, którego status chcesz zmienić:");
+        Console.WriteLine("Podaj numer zamówienia, którego status chcesz zmienić (wpisz '0' aby anulować akcję):");
         if (int.TryParse(Console.ReadLine(), out int orderId))
         {
             Order? orderToChange = queue.orders.FirstOrDefault(o => o.id == orderId);
@@ -311,8 +364,13 @@ public class Interface {
                 Console.WriteLine("4. gotowe");
                 Console.WriteLine("5. w dostawie");
                 Console.WriteLine("6. dostarczone");
-                Console.WriteLine("6. anulowane");
-                int newStatusChoice = int.Parse(Console.ReadLine()!);
+                Console.WriteLine("7. anulowane");
+                string? input = Console.ReadLine();
+                if (!int.TryParse(input, out int newStatusChoice))
+                {
+                    Console.WriteLine("Nieprawidłowe dane. Wpisz numer statusu.");
+                    return;
+                }
                 switch (newStatusChoice)
                 {
                     case 1:
@@ -342,6 +400,11 @@ public class Interface {
                 }
                 Console.WriteLine("Status zamówienia został zaktualizowany.");
             }
+            else if (orderId == 0)
+            {
+                Console.WriteLine("Anulowano akcję zmiany statusu zamówienia.");
+                return;
+            }
             else
             {
                 Console.WriteLine("Nie znaleziono zamówienia o podanym numerze.");
@@ -359,15 +422,26 @@ public class Interface {
     public static void AddPizzaToMenu(Menu menu)
     {
         Console.WriteLine("=== TWORZENIE PIZZY ===");
-        Console.WriteLine("Podaj nazwę pizzy:");
+        Console.WriteLine("Podaj nazwę pizzy (wpisz '0' aby anulować akcję):");
         string pizzaName = Console.ReadLine()!;
-        Console.WriteLine("Podaj rozmiar pizzy \n 1. mała \n 2. średnia \n 3. duża");
-        int choice = int.Parse(Console.ReadLine()!);
+        if (string.IsNullOrWhiteSpace(pizzaName) || pizzaName == "0")
+        {
+            Console.WriteLine("Anulowano tworzenie pizzy.");
+            return;
+        }
+        Console.WriteLine("Podaj rozmiar pizzy \n1. Mała \n2. Średnia \n3. Duża \n4. Anuluj akcję");
+        string? input = Console.ReadLine();
+        if (!int.TryParse(input, out int choice))
+        {
+            Console.WriteLine("Nieprawidłowe dane.");
+            return;
+        }
         PizzaSize size = PizzaSize.SMALL;
-        if (choice < 1 || choice > 3)
+        if (choice < 1 || choice > 4)
         {
             Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-            CreateCustomPizza();
+            AddPizzaToMenu(menu);
+            return;
         }
         else
         {
@@ -379,10 +453,15 @@ public class Interface {
             {
                 size = PizzaSize.MEDIUM;
             }
-            else
+            else if (choice == 3)
             {
                 size = PizzaSize.LARGE;
 
+            }
+            else if (choice == 4)
+            {
+                Console.WriteLine("Anulowano tworzenie pizzy.");
+                return;
             }
         }
         Console.WriteLine("Wybierz składniki:");
@@ -396,24 +475,39 @@ public class Interface {
                 ingredientId++;
             }
             Console.WriteLine("Wybierz składnik (lub wpisz 0, aby zakończyć):");
-            int ingredientChoice = int.Parse(Console.ReadLine()!);
+            string? input2 = Console.ReadLine();
+
+            if (!int.TryParse(input2, out int ingredientChoice))
+            {
+                Console.WriteLine("Nieprawidłowe dane. Wpisz numer składnika.");
+                continue;
+            }
             if (ingredientChoice == 0)
             {
-                break; // Zakończ wybieranie składników
+                break;
             }
             if (ingredientChoice < 1 || ingredientChoice > Ingredient.allIngredients.Count)
             {
                 Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-                continue; // Poproś o ponowny wybór składnika
+                continue;
             }
-            ingredients.Add(Ingredient.allIngredients[ingredientChoice - 1]); // Dodaj składnik do listy
+            ingredients.Add(Ingredient.allIngredients[ingredientChoice - 1]);
         }
 
         Pizza customPizza = new Pizza(pizzaName, ingredients, size, false);
-        // Logika dodawania pizzy do menu
         Console.WriteLine($"Stworzono pizzę: {customPizza.name}, rozmiar: {customPizza.size}, skład: {string.Join(", ", customPizza.ingredients.Select(i => i.Name))}");
-        menu.AddPizza(customPizza);
-
+        Console.WriteLine("Czy na pewno chcesz dodać tę pizzę do menu? (Tak/Nie)");
+        string? confirm = Console.ReadLine()?.ToLower();
+        if (confirm != "tak")
+        {
+            Console.WriteLine("Anulowano dodawanie pizzy do menu.");
+            return;
+        }
+        else
+        {
+            Console.WriteLine("Pizza została dodana do menu.");
+            menu.AddPizza(customPizza);
+        }
     }
     /// <summary>
     /// Tworzy składnik, pracownik nadaje nazwę i cenę składnika.
@@ -424,25 +518,37 @@ public class Interface {
         string ingredientName = "";
         while (string.IsNullOrWhiteSpace(ingredientName))
         {
-            Console.WriteLine("Podaj nazwę składnika:");
+            Console.WriteLine("Podaj nazwę składnika (Wpisz '0' aby anulować):");
             ingredientName = Console.ReadLine()!;
 
             if (string.IsNullOrWhiteSpace(ingredientName))
             {
                 Console.WriteLine("Nazwa nie może być pusta. Spróbuj ponownie.");
             }
+            else if (ingredientName == "0")
+            {
+                Console.WriteLine("Anulowano tworzenie składnika.");
+                return;
+            }
+            else if (Ingredient.allIngredients.Any(i => i.Name.Equals(ingredientName, StringComparison.OrdinalIgnoreCase)))
+            {
+                Console.WriteLine("Składnik o tej nazwie już istnieje. Wprowadź inną nazwę.");
+                ingredientName = "";
+            }
         }
         double ingredientPrice;
-        Console.Write("Podaj cenę składnika: ");
+        Console.Write("Podaj cenę składnika (wpisz '0' aby anulować akcję): ");
         string input = Console.ReadLine()!;
-
+        if (input == "0")
+        {
+            Console.WriteLine("Anulowano tworzenie składnika.");
+            return;
+        }
         while (!double.TryParse(input, out ingredientPrice))
         {
             Console.WriteLine("Nieprawidłowy format. Wprowadź liczbę (np. 4,99): ");
             input = Console.ReadLine()!;
         }
-
-        // Teraz ingredientPrice ma poprawną wartość typu double
         Console.WriteLine($"Cena składnika: {ingredientPrice} zł");
         Ingredient newIngredient = new Ingredient(ingredientName, ingredientPrice);
         Console.WriteLine($"Stworzono składnik: {newIngredient.Name}, cena: {newIngredient.Price} zł");

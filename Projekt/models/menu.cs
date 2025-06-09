@@ -22,6 +22,7 @@ public class Menu
     public void DisplayMenu()
     {
         int licznik = 1;
+        Console.WriteLine("=== MENU PIZZY ===");
         foreach (var item in menu)
         {
             string skladniki = string.Join(", ", item.ingredients.Select(i => i.Name));
