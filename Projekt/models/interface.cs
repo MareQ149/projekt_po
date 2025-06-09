@@ -242,6 +242,7 @@ public class Interface {
                         licznik++;
                         Promotion.ApplyPromo2Plus1(zamowienie);
                         queue.AddToQueue(zamowienie);
+                        break;
                     }
                 }
                 else

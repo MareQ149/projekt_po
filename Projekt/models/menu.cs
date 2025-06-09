@@ -21,11 +21,13 @@ public class Menu
     /// </summary>
     public void DisplayMenu()
     {
+        int licznik = 1;
         foreach (var item in menu)
         {
             string skladniki = string.Join(", ", item.ingredients.Select(i => i.Name));
 
-            Console.WriteLine($"Nazwa: {item.name}, rozmiar: {item.size}, sk³ad: {skladniki}, cena: {item.GetPrice()}");
+            Console.WriteLine($"Id: {licznik}, Nazwa: {item.name}, rozmiar: {item.size}, sk³ad: {skladniki}, cena: {item.GetPrice()}");
+            licznik++;
         }
     }
 
