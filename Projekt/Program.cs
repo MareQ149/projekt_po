@@ -2,7 +2,6 @@
 {
     static void Main()
     {
-    StartProgram: // etykieta dla restartu programu
 
         var cheese = new Ingredient("Ser", 5.0);
         var tomato = new Ingredient("Pomidor", 3.0);
@@ -19,83 +18,83 @@
 
         int licznik = 1;
         int choice = Interface.Select();
-        while (true) {
-        if (choice == 1)
+        while (true) 
         {
-            while (choice == 1)
+            if (choice == 1)
             {
-                Interface.UserInterface();
-                int choice2 = int.Parse(Console.ReadLine()!);
-                switch (choice2)
+                while (choice == 1)
                 {
-                    case 1:
-                        menu.DisplayMenu();
-                        break;
-                    case 2:
-                        Interface.CreateOrder(menu, ref licznik, queue);
-                        break;
-                    case 3:
-                        Interface.ViewCurrentOrders(queue);
-                        break;
-                    case 4:
-                        Interface.CancelOrderById(queue);
-                        break;
-                    case 5:
-                            choice = 2;
+                    Interface.UserInterface();
+                    int choice2 = int.Parse(Console.ReadLine()!);
+                    switch (choice2)
+                    {
+                        case 1:
+                            menu.DisplayMenu();
                             break;
-                    case 0:
-                            choice = 0;
-                        break;
-                    default:
-                        Console.WriteLine("Nieprawidłowy wybór. Proszę spróbować ponownie.");
-                        break;
+                        case 2:
+                            Interface.CreateOrder(menu, ref licznik, queue);
+                            break;
+                        case 3:
+                            Interface.ViewCurrentOrders(queue);
+                            break;
+                        case 4:
+                            Interface.CancelOrderById(queue);
+                            break;
+                        case 5:
+                                choice = 2;
+                                break;
+                        case 0:
+                                choice = 0;
+                            break;
+                        default:
+                            Console.WriteLine("Nieprawidłowy wybór. Proszę spróbować ponownie.");
+                            break;
+                    }
                 }
             }
-        }
-        else if (choice == 2)
-        {
-            while (choice == 2)
+            else if (choice == 2)
             {
-                Interface.WorkerInterface();
-                int choice2 = int.Parse(Console.ReadLine()!);
-                switch (choice2)
+                while (choice == 2)
                 {
-                    case 1:
-                        menu.DisplayMenu();
-                        break;
-                    case 2:
-                        Interface.ViewCurrentOrders(queue);
-                        break;
-                    case 3:
-                        Interface.ChangeOrderStatusById(queue);
-                        break;
-                    case 4:
-                        Interface.AddPizzaToMenu(menu);
-                        break;
-                    case 5:
-                        Interface.CreateIngredient();
-                        break;
-                    case 6:
-                        choice = 1;
-                        break;
-                    case 0:
-                        choice = 0;
-                        break;
-                    default:
-                        Console.WriteLine("Nieprawidłowy wybór. Proszę spróbować ponownie.");
-                        break;
+                    Interface.WorkerInterface();
+                    int choice2 = int.Parse(Console.ReadLine()!);
+                    switch (choice2)
+                    {
+                        case 1:
+                            menu.DisplayMenu();
+                            break;
+                        case 2:
+                            Interface.ViewCurrentOrders(queue);
+                            break;
+                        case 3:
+                            Interface.ChangeOrderStatusById(queue);
+                            break;
+                        case 4:
+                            Interface.AddPizzaToMenu(menu);
+                            break;
+                        case 5:
+                            Interface.CreateIngredient();
+                            break;
+                        case 6:
+                            choice = 1;
+                            break;
+                        case 0:
+                            choice = 0;
+                            break;
+                        default:
+                            Console.WriteLine("Nieprawidłowy wybór. Proszę spróbować ponownie.");
+                            break;
+                    }
                 }
             }
-        }
-        else if (choice == 0)
-        {
-            Environment.Exit(0);
-        }
-        else
-        {
-            Console.WriteLine("Nieprawidłowy wybór. Proszę spróbować ponownie.");
-            choice = Interface.Select();
-        }
+            else if (choice == 0)
+            {
+                Environment.Exit(0);
+            }
+            else
+            {
+                choice = Interface.Select();
+            }
         }
     }
 }

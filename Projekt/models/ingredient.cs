@@ -25,7 +25,7 @@ public class Ingredient
         
 
         Name = ingredientName;
-        Price = ingredientPrice;
+        Price = Math.Round(ingredientPrice, 2);
 
         allIngredients.Add(this);
     }

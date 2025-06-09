@@ -20,7 +20,7 @@ public class Interface {
         else
         {
             Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-            return 0;
+            return 3;
         }
     }
     /// <summary>
@@ -160,10 +160,19 @@ public class Interface {
             pizzas.Add(menu.menu[thirdPizza - 1]);
             Console.WriteLine("Podaj nazwę zamówienia:");
             string orderName = Console.ReadLine()!;
-            Order zamowienie = new Order(licznik, orderName, pizzas);
-            licznik++;
-            Promotion.ApplyPromo2Plus1(zamowienie);
-            queue.AddToQueue(zamowienie);
+            if (string.IsNullOrWhiteSpace(orderName) || pizzas.Count == 0)
+            {
+                Console.WriteLine("Błędne zamówienie!");
+                CreateOrder(menu, ref licznik, queue);
+            }
+            else
+            {
+                Order zamowienie = new Order(licznik, orderName, pizzas);
+                licznik++;
+                Promotion.ApplyPromo2Plus1(zamowienie);
+                queue.AddToQueue(zamowienie);
+            }
+            
             // Logika wyboru pizzy
         }
         else if (choice == "2")
@@ -197,11 +206,19 @@ public class Interface {
                 {
                     Console.WriteLine("Podaj nazwę zamówienia:");
                     string orderName = Console.ReadLine()!;
-                    Order zamowienie = new Order(licznik, orderName, pizzas);
-                    queue.AddToQueue(zamowienie);
-                    licznik++;
-                    Console.WriteLine("Zamówienie zakończone.");
-                    break; // Zakończ zamówienie
+
+                    if (string.IsNullOrWhiteSpace(orderName) || pizzas.Count == 0)
+                    {
+                        Console.WriteLine("Błędne zamówienie!");
+                        CreateOrder(menu, ref licznik, queue);
+                    }
+                    else
+                    {
+                        Order zamowienie = new Order(licznik, orderName, pizzas);
+                        licznik++;
+                        Promotion.ApplyPromo2Plus1(zamowienie);
+                        queue.AddToQueue(zamowienie);
+                    }
                 }
                 else
                 {
@@ -382,10 +399,29 @@ public class Interface {
     public static void CreateIngredient()
     {
         Console.WriteLine("=== TWORZENIE SKŁADNIKA ===");
-        Console.WriteLine("Podaj nazwę składnika:");
-        string ingredientName = Console.ReadLine()!;
-        Console.WriteLine("Podaj cenę składnika (x , x): ");
-        double ingredientPrice = double.Parse(Console.ReadLine()!);
+        string ingredientName = "";
+        while (string.IsNullOrWhiteSpace(ingredientName))
+        {
+            Console.WriteLine("Podaj nazwę składnika:");
+            ingredientName = Console.ReadLine()!;
+
+            if (string.IsNullOrWhiteSpace(ingredientName))
+            {
+                Console.WriteLine("Nazwa nie może być pusta. Spróbuj ponownie.");
+            }
+        }
+        double ingredientPrice;
+        Console.Write("Podaj cenę składnika: ");
+        string input = Console.ReadLine()!;
+
+        while (!double.TryParse(input, out ingredientPrice))
+        {
+            Console.WriteLine("Nieprawidłowy format. Wprowadź liczbę (np. 4,99): ");
+            input = Console.ReadLine()!;
+        }
+
+        // Teraz ingredientPrice ma poprawną wartość typu double
+        Console.WriteLine($"Cena składnika: {ingredientPrice} zł");
         Ingredient newIngredient = new Ingredient(ingredientName, ingredientPrice);
         Console.WriteLine($"Stworzono składnik: {newIngredient.Name}, cena: {newIngredient.Price} zł");
     }
