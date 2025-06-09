@@ -19,10 +19,10 @@
 
         int licznik = 1;
         int choice = Interface.Select();
-
+        while (true) {
         if (choice == 1)
         {
-            while (true)
+            while (choice == 1)
             {
                 Interface.UserInterface();
                 int choice2 = int.Parse(Console.ReadLine()!);
@@ -41,9 +41,10 @@
                         Interface.CancelOrderById(queue);
                         break;
                     case 5:
-                        goto StartProgram;
+                            choice = 2;
+                            break;
                     case 0:
-                        Environment.Exit(0);
+                            choice = 0;
                         break;
                     default:
                         Console.WriteLine("Nieprawidłowy wybór. Proszę spróbować ponownie.");
@@ -53,7 +54,7 @@
         }
         else if (choice == 2)
         {
-            while (true)
+            while (choice == 2)
             {
                 Interface.WorkerInterface();
                 int choice2 = int.Parse(Console.ReadLine()!);
@@ -75,9 +76,10 @@
                         Interface.CreateIngredient();
                         break;
                     case 6:
-                        goto StartProgram;
+                        choice = 1;
+                        break;
                     case 0:
-                        Environment.Exit(0);
+                        choice = 0;
                         break;
                     default:
                         Console.WriteLine("Nieprawidłowy wybór. Proszę spróbować ponownie.");
@@ -85,9 +87,15 @@
                 }
             }
         }
+        else if (choice == 0)
+        {
+            Environment.Exit(0);
+        }
         else
         {
-            goto StartProgram;
+            Console.WriteLine("Nieprawidłowy wybór. Proszę spróbować ponownie.");
+            choice = Interface.Select();
+        }
         }
     }
 }

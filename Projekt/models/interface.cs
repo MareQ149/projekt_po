@@ -28,12 +28,12 @@ public class Interface {
     /// </summary>
     public static void UserInterface()
     {
-        Console.WriteLine("=== MENU GŁÓWNE ===");
+        Console.WriteLine("=== MENU KLIENTA ===");
         Console.WriteLine("1. Zobacz menu pizzy");
         Console.WriteLine("2. Stwórz zamówienie");
         Console.WriteLine("3. Zobacz kolejkę zamówień");
         Console.WriteLine("4. Anuluj zamówienie");
-        Console.WriteLine("5. Powrót");
+        Console.WriteLine("5. Zmień rodzaj konta");
         Console.WriteLine("0. Wyjście");
     }
     /// <summary>
@@ -47,7 +47,7 @@ public class Interface {
         Console.WriteLine("3. Zmień status zamówienia (po id)");
         Console.WriteLine("4. Dodaj pizze do menu");
         Console.WriteLine("5. Dodaj składnik do listy składników");
-        Console.WriteLine("6. Powrót");
+        Console.WriteLine("6. Zmień rodzaj konta");
         Console.WriteLine("0. Wyjście");
     }
     /// <summary>
@@ -58,6 +58,7 @@ public class Interface {
         Console.WriteLine("=== TWORZENIE WŁASNEJ PIZZY ===");
         Console.WriteLine("Podaj nazwę pizzy:");
         string pizzaName = Console.ReadLine()!;
+        Console.WriteLine("=== PODAJ ROZMIAR ===");
         Console.WriteLine("Podaj rozmiar pizzy \n 1. mała \n 2. średnia \n 3. duża");
         int choice = int.Parse(Console.ReadLine()!);
         PizzaSize size = PizzaSize.SMALL;
