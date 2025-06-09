@@ -20,7 +20,7 @@ public class Interface {
         else
         {
             Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-            return 0;
+            return 3;
         }
     }
     /// <summary>
