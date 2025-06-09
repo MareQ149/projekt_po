@@ -91,36 +91,33 @@ public class Interface {
                 Console.WriteLine($"{ingredientId}. {ingredient.Name} - {ingredient.Price} zł");
                 ingredientId++;
             }
-            while (true)
+            Console.WriteLine("Wybierz składnik (lub wpisz 0, aby zakończyć):");
+
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out int ingredientChoice))
             {
-                Console.WriteLine("Wybierz składnik (lub wpisz 0, aby zakończyć):");
-
-                string? input = Console.ReadLine();
-                if (!int.TryParse(input, out int ingredientChoice))
-                {
-                    Console.WriteLine("Nieprawidłowe dane. Wpisz numer składnika.");
-                    continue; // Poproś ponownie
-                }
-
-                if (ingredientChoice == 0)
-                {
-                    break; // Zakończ wybieranie składników
-                }
-
-                if (ingredientChoice < 1 || ingredientChoice > Ingredient.allIngredients.Count)
-                {
-                    Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-                    continue;
-                }
-
-                ingredients.Add(Ingredient.allIngredients[ingredientChoice - 1]); // Dodaj składnik do listy
+                Console.WriteLine("Nieprawidłowe dane. Wpisz numer składnika.");
+                continue; // Poproś ponownie
             }
+
+            if (ingredientChoice == 0)
+            {
+                break; // Zakończ wybieranie składników
+            }
+
+            if (ingredientChoice < 1 || ingredientChoice > Ingredient.allIngredients.Count)
+            {
+                Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
+                continue;
+            }
+
+            ingredients.Add(Ingredient.allIngredients[ingredientChoice - 1]); // Dodaj składnik do listy
         }
-            Pizza customPizza = new Pizza(pizzaName, ingredients, size, false);
+        Pizza customPizza = new Pizza(pizzaName, ingredients, size, false);
         // Logika dodawania pizzy do menu lub zamówienia
         Console.WriteLine($"Stworzono pizzę: {customPizza.name}, rozmiar: {customPizza.size}, skład: {string.Join(", ", customPizza.ingredients.Select(i => i.Name))}");
         return customPizza;
-        }
+    }
     /// <summary>
     /// Tworzenie zamówienia, gdzie użytkownik może wybrać pizzę z menu lub stworzyć własną pizzę, a także zastosować promocję 2+1.
     /// </summary>
