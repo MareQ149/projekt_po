@@ -60,28 +60,26 @@ public class Interface {
         string pizzaName = Console.ReadLine()!;
         Console.WriteLine("=== PODAJ ROZMIAR ===");
         Console.WriteLine("Podaj rozmiar pizzy \n 1. mała \n 2. średnia \n 3. duża");
-        int choice = int.Parse(Console.ReadLine()!);
-        PizzaSize size = PizzaSize.SMALL;
-        if (choice < 1 || choice > 3)
+
+        if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > 3)
         {
             Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-            CreateCustomPizza();
+            CreateCustomPizza(); // Zakładam, że ta metoda ponownie wywołuje wybór rozmiaru
         }
-        else
-        {
-            if (choice == 1)
-            {
-                size = PizzaSize.SMALL;
-            }
-            else if (choice == 2)
-            {
-                size = PizzaSize.MEDIUM;
-            }
-            else
-            {
-                size = PizzaSize.LARGE;
 
-            }
+        PizzaSize size;
+
+        if (choice == 1)
+        {
+            size = PizzaSize.SMALL;
+        }
+        else if (choice == 2)
+        {
+            size = PizzaSize.MEDIUM;
+        }
+        else // choice == 3
+        {
+            size = PizzaSize.LARGE;
         }
         Console.WriteLine("Wybierz składniki:");
         List<Ingredient> ingredients = new();
@@ -93,25 +91,36 @@ public class Interface {
                 Console.WriteLine($"{ingredientId}. {ingredient.Name} - {ingredient.Price} zł");
                 ingredientId++;
             }
-            Console.WriteLine("Wybierz składnik (lub wpisz 0, aby zakończyć):");
-            int ingredientChoice = int.Parse(Console.ReadLine()!);
-            if (ingredientChoice == 0)
+            while (true)
             {
-                break; // Zakończ wybieranie składników
+                Console.WriteLine("Wybierz składnik (lub wpisz 0, aby zakończyć):");
+
+                string? input = Console.ReadLine();
+                if (!int.TryParse(input, out int ingredientChoice))
+                {
+                    Console.WriteLine("Nieprawidłowe dane. Wpisz numer składnika.");
+                    continue; // Poproś ponownie
+                }
+
+                if (ingredientChoice == 0)
+                {
+                    break; // Zakończ wybieranie składników
+                }
+
+                if (ingredientChoice < 1 || ingredientChoice > Ingredient.allIngredients.Count)
+                {
+                    Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
+                    continue;
+                }
+
+                ingredients.Add(Ingredient.allIngredients[ingredientChoice - 1]); // Dodaj składnik do listy
             }
-            if (ingredientChoice < 1 || ingredientChoice > Ingredient.allIngredients.Count)
-            {
-                Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
-                continue; // Poproś o ponowny wybór składnika
-            }
-            ingredients.Add(Ingredient.allIngredients[ingredientChoice - 1]); // Dodaj składnik do listy
         }
-        
-        Pizza customPizza = new Pizza(pizzaName, ingredients, size, false);
+            Pizza customPizza = new Pizza(pizzaName, ingredients, size, false);
         // Logika dodawania pizzy do menu lub zamówienia
         Console.WriteLine($"Stworzono pizzę: {customPizza.name}, rozmiar: {customPizza.size}, skład: {string.Join(", ", customPizza.ingredients.Select(i => i.Name))}");
         return customPizza;
-    }
+        }
     /// <summary>
     /// Tworzenie zamówienia, gdzie użytkownik może wybrać pizzę z menu lub stworzyć własną pizzę, a także zastosować promocję 2+1.
     /// </summary>
@@ -131,7 +140,12 @@ public class Interface {
             Console.WriteLine("Wybierz 3 pizze, najtańsza będzie gratis!");
             menu.DisplayMenu();
             Console.WriteLine("Wybierz pierwszą pizzę:");
-            int firstPizza = int.Parse(Console.ReadLine()!);
+            string? input = Console.ReadLine();
+            if (!int.TryParse(input, out int firstPizza) || firstPizza < 1 || firstPizza > menu.menu.Count)
+            {
+                Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
+                CreateOrder(menu, ref licznik, queue);
+            }
             if (firstPizza < 1 || firstPizza > menu.menu.Count)
             {
                 Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
@@ -139,7 +153,13 @@ public class Interface {
                 return;
             }
             Console.WriteLine("Wybierz drugą pizzę:");
-            int secondPizza = int.Parse(Console.ReadLine()!);
+            string? input2 = Console.ReadLine();
+            if (!int.TryParse(input2, out int secondPizza) || secondPizza < 1 || secondPizza > menu.menu.Count)
+            {
+                Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
+                CreateOrder(menu, ref licznik, queue);
+
+            }
             if (secondPizza < 1 || secondPizza > menu.menu.Count)
             {
                 Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
@@ -147,12 +167,16 @@ public class Interface {
                 return;
             }
             Console.WriteLine("Wybierz trzecią pizzę:");
-            int thirdPizza = int.Parse(Console.ReadLine()!);
+            string? input3 = Console.ReadLine();
+            if (!int.TryParse(input3, out int thirdPizza) || thirdPizza < 1 || thirdPizza > menu.menu.Count)
+            {
+                Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
+                CreateOrder(menu, ref licznik, queue);
+            }
             if (thirdPizza < 1 || thirdPizza > menu.menu.Count)
             {
                 Console.WriteLine("Nieprawidłowy wybór. Spróbuj ponownie.");
                 CreateOrder(menu, ref licznik, queue);
-                return;
             }
             List<Pizza> pizzas = new();
             pizzas.Add(menu.menu[firstPizza - 1]); // Zakładamy, że indeksy zaczynają się od 0
